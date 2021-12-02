@@ -19,7 +19,7 @@
 
     <groupId>ca.gbc</groupId>
     <artifactId>recipe-project</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>recipe-project</name>
     <description>recipe-project</description>
 
@@ -29,7 +29,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/Lhosel/recipe-application.git</developerConnection>
-        <tag>recipe-project-0.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
