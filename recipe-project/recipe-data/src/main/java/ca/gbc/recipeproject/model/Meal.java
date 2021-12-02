@@ -1,14 +1,24 @@
 package ca.gbc.recipeproject.model;
 
+import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
+@Entity
+@Table(name = "MEAL")
 public class Meal extends BaseEntity {
 
+    @Column(name = "MEAL_NAME")
     private String mealName;
-    private Set<Recipe> recipes;
+
+    @Column(name = "DATE")
     private Date date;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "MEAL_ID")
     private Recipe recipe;
 
     public String getMealName() {
@@ -17,14 +27,6 @@ public class Meal extends BaseEntity {
 
     public void setMealName(String mealName) {
         this.mealName = mealName;
-    }
-
-    public Set<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(Set<Recipe> recipes) {
-        this.recipes = recipes;
     }
 
     public Date getDate() {

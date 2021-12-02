@@ -1,23 +1,49 @@
 package ca.gbc.recipeproject.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "RECIPES")
 public class Recipe extends BaseEntity {
 
+    @Column(name = "RECIPE_NAME")
     private String recipeName;
+
+    @Column(name = "DESCRIPTION")
     private String description;
+
+    @Column(name = "SERVINGS")
     private int servings;
+
+    @Column(name = "DIRECTIONS")
     private String directions;
+
+    @Column(name = "PREP_TIME")
     private int prepTime;
+
+    @Column(name = "COOK_TIME")
     private int cookTime;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private User author;
+
+    @Column(name = "CREATION_DATE")
     private Date creationDate;
+
+    @Column(name = "VIEW")
     private boolean view;
 
+    private User user;
+
     // assignment 2 requirements
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
+
+    @ManyToMany
     private Set<User> favoriteByUsers = new HashSet<>();
 
     public Recipe addIngredient(Ingredient ingredient) {

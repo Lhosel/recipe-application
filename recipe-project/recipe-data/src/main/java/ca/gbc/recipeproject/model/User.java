@@ -1,20 +1,41 @@
 package ca.gbc.recipeproject.model;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "USERS")
 public class User extends BaseEntity {
 
+    @Column(name = "USERNAME")
     private String username;
+
+    @Column(name = "PASSWORD")
     private String password;
+
+    @Column(name = "EMAIL")
     private String email;
-    private Set<Recipe> createdRecipes;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    private Set<Recipe> createdRecipes = new HashSet<>();
+
+    @Column(name = "STATUS")
     private boolean status;
-    private Set<Meal> meals;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Meal> meals = new HashSet<>();
 
     // assignment 2 requirements
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_FAVOURITE", joinColumns = @JoinColumn(name = "USER_ID"),
+    inverseJoinColumns = @JoinColumn(name = "RECIPE_ID"))
     private Set<Recipe> favouriteRecipes = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Ingredient> shoppingList = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Events> eventList = new HashSet<>();
 
     public String getUsername() {
