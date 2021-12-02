@@ -18,6 +18,7 @@ public class Ingredient extends BaseEntity {
     private Recipe recipe;
 
     @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public Ingredient(String ingredientName, double amount) {

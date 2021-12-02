@@ -17,13 +17,13 @@ public class User extends BaseEntity {
     @Column(name = "EMAIL")
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "author")
     private Set<Recipe> createdRecipes = new HashSet<>();
 
     @Column(name = "STATUS")
     private boolean status;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
     private Set<Meal> meals = new HashSet<>();
 
     // assignment 2 requirements
@@ -32,10 +32,10 @@ public class User extends BaseEntity {
     inverseJoinColumns = @JoinColumn(name = "RECIPE_ID"))
     private Set<Recipe> favouriteRecipes = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
     private Set<Ingredient> shoppingList = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
     private Set<Events> eventList = new HashSet<>();
 
     public String getUsername() {

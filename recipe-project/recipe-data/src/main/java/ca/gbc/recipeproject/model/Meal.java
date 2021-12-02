@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "MEAL")
+@Table(name = "MEALS")
 public class Meal extends BaseEntity {
 
     @Column(name = "MEAL_NAME")

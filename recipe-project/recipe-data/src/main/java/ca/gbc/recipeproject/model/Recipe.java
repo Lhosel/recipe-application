@@ -37,10 +37,8 @@ public class Recipe extends BaseEntity {
     @Column(name = "VIEW")
     private boolean view;
 
-    private User user;
-
     // assignment 2 requirements
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
 
     @ManyToMany
