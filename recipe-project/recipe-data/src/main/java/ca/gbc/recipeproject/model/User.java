@@ -32,11 +32,22 @@ public class User extends BaseEntity {
     inverseJoinColumns = @JoinColumn(name = "RECIPE_ID"))
     private Set<Recipe> favouriteRecipes = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
+    @ManyToMany
+    @JoinTable(name = "CART_INGREDIENTS",
+    joinColumns = @JoinColumn(name = "USER_ID"),
+    inverseJoinColumns = @JoinColumn(name = "INGREDIENT_ID"))
     private Set<Ingredient> shoppingList = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
     private Set<Events> eventList = new HashSet<>();
+
+    public void addToList(Ingredient ingredient) {
+        this.shoppingList.add(ingredient);
+    }
+
+    public void addToFavourite(Recipe recipe) {
+        this.favouriteRecipes.add(recipe);
+    }
 
     public String getUsername() {
         return username;

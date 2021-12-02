@@ -1,6 +1,8 @@
 package ca.gbc.recipeproject.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "INGREDIENTS")
@@ -13,13 +15,11 @@ public class Ingredient extends BaseEntity {
     @Column(name = "AMOUNT")
     private double amount;
 
-    @ManyToOne
-    @JoinColumn(name = "RECIPE_ID")
-    private Recipe recipe;
+    @ManyToMany(mappedBy = "ingredients")
+    private Set<Recipe> recipe;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @ManyToMany(mappedBy = "shoppingList")
+    private Set<User> user = new HashSet<>();
 
     public Ingredient(String ingredientName, double amount) {
         this.ingredientName = ingredientName;
@@ -46,12 +46,19 @@ public class Ingredient extends BaseEntity {
         this.amount = amount;
     }
 
-    public Recipe getRecipe() {
+    public Set<Recipe> getRecipe() {
         return recipe;
     }
 
-    public void setRecipe(Recipe recipe) {
+    public void setRecipe(Set<Recipe> recipe) {
         this.recipe = recipe;
     }
 
+    public Set<User> getUser() {
+        return user;
+    }
+
+    public void setUser(Set<User> user) {
+        this.user = user;
+    }
 }

@@ -38,14 +38,16 @@ public class Recipe extends BaseEntity {
     private boolean view;
 
     // assignment 2 requirements
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "recipe")
+    @ManyToMany
+    @JoinTable(name = "RECIPE_INGREDIENTS",
+            joinColumns = @JoinColumn(name = "RECIPE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "INGREDIENT_ID"))
     private Set<Ingredient> ingredients = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "favouriteRecipes")
     private Set<User> favoriteByUsers = new HashSet<>();
 
     public Recipe addIngredient(Ingredient ingredient) {
-        ingredient.setRecipe(this);
         this.ingredients.add(ingredient);
         return this;
     }

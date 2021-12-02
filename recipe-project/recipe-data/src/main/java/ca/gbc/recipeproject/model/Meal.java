@@ -18,7 +18,7 @@ public class Meal extends BaseEntity {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "MEAL_ID")
+    @JoinColumn(name = "RECIPE_ID")
     private Recipe recipe;
 
     public String getMealName() {
