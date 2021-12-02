@@ -2,9 +2,13 @@ package ca.gbc.recipeproject.services.map;
 
 import ca.gbc.recipeproject.model.Events;
 import ca.gbc.recipeproject.services.EventsService;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
+@Profile({"default", "map"})
 public class EventsServiceMap extends AbstractMapService<Events, Long> implements EventsService {
 
     @Override

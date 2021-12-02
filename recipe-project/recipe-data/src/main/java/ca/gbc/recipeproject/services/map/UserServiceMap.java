@@ -2,11 +2,13 @@ package ca.gbc.recipeproject.services.map;
 
 import ca.gbc.recipeproject.model.User;
 import ca.gbc.recipeproject.services.UserService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Profile({"default", "map"})
 public class UserServiceMap extends AbstractMapService<User, Long> implements UserService {
 
     @Override
