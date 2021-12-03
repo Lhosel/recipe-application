@@ -8,6 +8,9 @@ import ca.gbc.recipeproject.services.springdatajpa.RecipeSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.UserSDJpaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -47,7 +50,7 @@ public class IngredientController {
         return "/ingredient/ingredientConfirm";
     }
 
-    //CREATE/SAVE
+    //CREATE/SAVE INGREDIENTS
 
     @RequestMapping({"/ingredient/create", "/ingredient/create.html"})
     public String create(Model model) {
@@ -62,5 +65,40 @@ public class IngredientController {
         model.addAttribute("ingredient", ingredient);
         return "/ingredient/ingredientConfirm";
     }
+
+    // UPDATE INGREDIENTS
+    @GetMapping("/ingredient/edit/{id}")
+    public String showUpdateIngredientForm(@PathVariable("id") long id, Model model)
+    {
+        Ingredient ingredient = ingredientSDJpaService.findById(id);
+
+        model.addAttribute("ingredient", ingredient);
+        return "/ingredient/update-ingredient";
+    }
+
+    // DELETE INGREDIENTS
+
+    @GetMapping("/ingredient/delete/{id}")
+    public String deleteIngredient(@PathVariable("id") long id, Model model) {
+        Ingredient ingredient = ingredientSDJpaService.findById(id);
+        // Removing all references to ingredient that's going to be deleted
+        for (User u : userSDJpaService.findAll()) {
+            u.getShoppingList().remove(ingredient);
+        }
+        for (Recipe r : recipeSDJpaService.findAll()) {
+            r.getIngredients().remove(ingredient);
+        }
+
+        ingredientSDJpaService.delete(ingredient);
+        return "redirect:/ingredient/index";
+    }
+
+    @PostMapping("/ingredient/edit/{id}")
+    public String updateIngredient(@PathVariable("id") long id, Ingredient ingredient, Model model) {
+        ingredientSDJpaService.save(ingredient);
+        return "redirect:/ingredient/index";
+    }
+
+
 
 }

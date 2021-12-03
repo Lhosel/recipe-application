@@ -84,11 +84,9 @@ public class DataLoader implements CommandLineRunner {
 
 
         // adding ingredients to shopping lists:
-        /*
         user1.addToList(salt);
         user1.addToList(pepper);
         user2.addToList(pepper);
-         */
 
 
         // adding meals

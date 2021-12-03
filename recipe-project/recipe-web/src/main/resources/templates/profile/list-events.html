@@ -39,39 +39,24 @@
 
 <div class="container-xxl">
     &nbsp;&nbsp;
+    <h2>Shopping Cart</h2>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Edit</th>
+            <th>Event Name</th>
+            <th>Update</th>
             <th>Delete</th>
-
 
         </tr>
         </thead>
         <tbody>
-        <tr th:each="ingredient : ${ingredients}">
-            <td th:text="${ingredient.getId()}"></td>
-            <td th:text="${ingredient.getIngredientName()}"></td>
-            <td th:text="${ingredient.getAmount()}"></td>
-            <td><a th:href="@{/ingredient/edit/{id}(id=${ingredient.id})}">Edit</a> </td>
-            <td><a th:href="@{/ingredient/delete/{id}(id=${ingredient.id})}">Delete</a> </td>
+        <tr th:each="event : ${events}">
+            <td th:text="${event.eventName}"></td>
+            <td><a th:href="@{/profile/event/edit/{id}(id=${event.id})}">Edit</a> </td>
+            <td><a th:href="@{/profile/event/delete/{id}(id=${event.id})}">Delete</a> </td>
         </tr>
         </tbody>
     </table>
-
-    <form method="post" th:action="@{/ingredient/cart}" th:object="${user}">
-        <div class="mb-3">
-
-            <label th:text="'Add Ingredients To Cart  (CTRL CLICK FOR SEVERAL INGREDIENTS, CTRL CLICK SELECTED INGREDIENTS TO DESELECT)'">Ingredients:</label>
-            <select th:field="*{shoppingList}" th:oninput="this.setCustomValidity('')"  th:required="true" multiple style="resize: vertical; height: 200px" class="form-control">
-                <option  th:each="ingredient : ${ingredients}" th:value="${ingredient.id}" th:text="${ingredient.ingredientName}" />
-            </select>
-        </div>
-        <button class="btn btn-lg btn-dark" th:text="'Save'" type="submit"></button>
-    </form>
 </div>
 </table>
 </body>
