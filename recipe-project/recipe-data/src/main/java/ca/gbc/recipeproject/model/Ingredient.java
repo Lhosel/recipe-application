@@ -30,6 +30,10 @@ public class Ingredient extends BaseEntity {
 
     }
 
+    public String show() {
+        return    amount  + " x " + ingredientName;
+    }
+
     public String getIngredientName() {
         return ingredientName;
     }

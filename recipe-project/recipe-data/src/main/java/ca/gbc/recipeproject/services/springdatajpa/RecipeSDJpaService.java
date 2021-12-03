@@ -52,4 +52,11 @@ public class RecipeSDJpaService implements RecipeService {
     public Recipe findByRecipename(String recipeName) {
         return null;
     }
+
+    @Override
+    public Set<Recipe> findByName(String searchWord) {
+        return recipeRepository.findByName(searchWord);
+    }
+
+
 }

@@ -41,4 +41,9 @@ public class RecipeServiceMap extends AbstractMapService<Recipe, Long> implement
         return null;
     }
 
+    @Override
+    public Set<Recipe> findByName(String searchWord) {
+        return null;
+    }
+
 }
