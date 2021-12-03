@@ -42,37 +42,17 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Servings</th>
-            <th>Ingredients</th>
-            <th>Directions</th>
-            <th>Prep Time</th>
-            <th>Cook Time</th>
-            <th>Created By</th>
+            <th>Steps</th>
+
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td th:text="${findRecipe.getId()}"></td>
-            <td th:text="${findRecipe.getRecipeName()}"></td>
-            <td th:text="${findRecipe.getDescription()}"></td>
-            <td th:text="${findRecipe.getServings()}"></td>
-
-            <td> <ul th:each="ingredient : ${findRecipe.ingredients}"> <li th:text="${ingredient.show()}"></li></ul></td>
-
-
-
-            <td th:text="${findRecipe.getDirections()}"></td>
-            <td th:text="${findRecipe.getPrepTime()}"></td>
-            <td th:text="${findRecipe.getCookTime()}"></td>
-            <td th:text="${findRecipe.getAuthor().getUsername()}"></td>
+            <td th:text="${findRecipe.directions}"></td>
         </tr>
         </tbody>
     </table>
-    <a th:href="@{'/recipe/recipe/' + ${findRecipe.getId()} + '/ingredients'}">Show Ingredients</a>
-    <a th:href="@{'/recipe/recipe/' + ${findRecipe.getId()} + '/steps'}">Show Steps</a>
+    <a th:href="@{/recipe/{id}(id = ${findRecipe.getId()})}">Go Back</a>
 </div>
 </table>
 </body>

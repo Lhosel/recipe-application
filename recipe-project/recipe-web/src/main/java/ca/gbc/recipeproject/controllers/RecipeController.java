@@ -72,11 +72,20 @@ public class RecipeController {
         return "/recipe/details";
     }
 
+    // View Ingredients
     @RequestMapping({"/recipe/{id}/ingredients", "/{id}/ingredients", "/recipe/recipe/{id}/ingredients"})
     public String getRecipeIngredients(Model model, @PathVariable Long id) {
         Recipe recipe = recipeSDJpaService.findById(id);
         model.addAttribute("findRecipe", recipe);
         return "/ingredient/recipeIngredients";
+    }
+
+    // View Steps
+    @RequestMapping({"/recipe/{id}/steps", "/{id}/steps", "/recipe/recipe/{id}/steps"})
+    public String getRecipeSteps(Model model, @PathVariable Long id) {
+        Recipe recipe = recipeSDJpaService.findById(id);
+        model.addAttribute("findRecipe", recipe);
+        return "/ingredient/recipeSteps";
     }
 
 
