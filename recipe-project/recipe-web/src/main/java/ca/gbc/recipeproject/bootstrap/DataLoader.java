@@ -5,6 +5,8 @@ import ca.gbc.recipeproject.services.springdatajpa.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -82,25 +84,31 @@ public class DataLoader implements CommandLineRunner {
 
 
         // adding ingredients to shopping lists:
+        /*
         user1.addToList(salt);
         user1.addToList(pepper);
         user2.addToList(pepper);
+         */
+
 
         // adding meals
         Meal meal1 = new Meal();
         meal1.setMealName("Breakfast");
         meal1.setRecipe(recipe2);
         meal1.setUser(user1);
+        meal1.setDate(new Date());
 
         Meal meal2 = new Meal();
         meal2.setMealName("Lunch");
         meal2.setRecipe(recipe2);
         meal2.setUser(user1);
+        meal2.setDate(new Date());
 
         Meal meal3 = new Meal();
         meal3.setMealName("Lunch");
         meal3.setRecipe(recipe2);
         meal3.setUser(user2);
+        meal3.setDate(new Date());
 
         // adding events
         Events event1 = new Events();

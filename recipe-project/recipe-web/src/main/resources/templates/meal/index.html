@@ -42,31 +42,22 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Amount</th>
+            <th>Meal Name</th>
+            <th>Meal Date</th>
+            <th>Food Planned (Recipe Name)</th>
 
         </tr>
         </thead>
         <tbody>
-        <tr th:each="ingredient : ${ingredients}">
-            <td th:text="${ingredient.getId()}"></td>
-            <td th:text="${ingredient.getIngredientName()}"></td>
-            <td th:text="${ingredient.getAmount()}"></td>
+        <tr th:each="meal : ${meals}">
+            <td th:text="${meal.getMealName()}"></td>
+            <td th:text="${meal.getDate()}"></td>
+            <td th:text="${meal.getRecipe().recipeName}"></td>
         </tr>
         </tbody>
     </table>
 
-    <form method="post" th:action="@{/ingredient/cart}" th:object="${user}">
-        <div class="mb-3">
 
-            <label th:text="'Add Ingredients To Cart  (CTRL CLICK FOR SEVERAL INGREDIENTS, CTRL CLICK SELECTED INGREDIENTS TO DESELECT)'">Ingredients:</label>
-            <select th:field="*{shoppingList}" th:oninput="this.setCustomValidity('')"  th:required="true" multiple style="resize: vertical; height: 200px" class="form-control">
-                <option  th:each="ingredient : ${ingredients}" th:value="${ingredient.id}" th:text="${ingredient.ingredientName}" />
-            </select>
-        </div>
-        <button class="btn btn-lg btn-dark" th:text="'Save'" type="submit"></button>
-    </form>
 </div>
 </table>
 </body>

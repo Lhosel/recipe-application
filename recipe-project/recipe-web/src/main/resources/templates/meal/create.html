@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Details</title>
+    <title>Create</title>
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
 </head>
@@ -21,7 +21,10 @@
                     <a class="nav-link" href="http://localhost:8090/recipe/index">Recipes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8090/recipe/create">Create</a>
+                    <a class="nav-link active" href="http://localhost:8090/recipe/create">Create</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8090/recipe/search">Search</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Profile</a>
@@ -39,35 +42,24 @@
 
 <div class="container-xxl">
     &nbsp;&nbsp;
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Amount</th>
+    <form method="post" th:action="@{/meal/save}" th:object="${meal}">
+        <div class="mb-3">
+            <label th:text="'Meal Name'"></label>
+            <input class="form-control" th:field="*{mealName}" th:oninput="this.setCustomValidity('')" th:oninvalid="this.setCustomValidity('Recipe name cannot be blank')"
+                   th:required="true"
+                   type="text">
+        </div>
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="ingredient : ${ingredients}">
-            <td th:text="${ingredient.getId()}"></td>
-            <td th:text="${ingredient.getIngredientName()}"></td>
-            <td th:text="${ingredient.getAmount()}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <form method="post" th:action="@{/ingredient/cart}" th:object="${user}">
         <div class="mb-3">
 
-            <label th:text="'Add Ingredients To Cart  (CTRL CLICK FOR SEVERAL INGREDIENTS, CTRL CLICK SELECTED INGREDIENTS TO DESELECT)'">Ingredients:</label>
-            <select th:field="*{shoppingList}" th:oninput="this.setCustomValidity('')"  th:required="true" multiple style="resize: vertical; height: 200px" class="form-control">
-                <option  th:each="ingredient : ${ingredients}" th:value="${ingredient.id}" th:text="${ingredient.ingredientName}" />
+            <label th:text="'Recipes (CTRL CLICK FOR SEVERAL INGREDIENTS, CTRL CLICK SELECTED INGREDIENTS TO DESELECT)'">Ingredients:</label>
+            <select th:field="*{recipe}" th:oninput="this.setCustomValidity('')"  th:required="true" class="form-control">
+                <option  th:each="r : ${recipeList}" th:value="${r.id}" th:text="${r.recipeName}" />
             </select>
         </div>
+
         <button class="btn btn-lg btn-dark" th:text="'Save'" type="submit"></button>
     </form>
 </div>
-</table>
 </body>
 </html>

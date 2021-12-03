@@ -2,6 +2,7 @@ package ca.gbc.recipeproject.controllers;
 
 import ca.gbc.recipeproject.model.Ingredient;
 import ca.gbc.recipeproject.model.Recipe;
+import ca.gbc.recipeproject.model.User;
 import ca.gbc.recipeproject.services.springdatajpa.IngredientSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.RecipeSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.UserSDJpaService;
@@ -15,11 +16,15 @@ import java.util.Set;
 
 @Controller
 public class IngredientController {
+    private final RecipeSDJpaService recipeSDJpaService;
+    private final UserSDJpaService userSDJpaService;
     private IngredientSDJpaService ingredientSDJpaService;
 
 
-    public IngredientController(IngredientSDJpaService ingredientSDJpaService) {
+    public IngredientController(RecipeSDJpaService recipeSDJpaService, UserSDJpaService userSDJpaService, IngredientSDJpaService ingredientSDJpaService) {
 
+        this.recipeSDJpaService = recipeSDJpaService;
+        this.userSDJpaService = userSDJpaService;
         this.ingredientSDJpaService = ingredientSDJpaService;
 
     }
@@ -27,10 +32,19 @@ public class IngredientController {
     // INDEX / DISPLAY ALL INGREDIENTS
     @RequestMapping({"", "/ingredient", "/ingredient/index", "/index.html"})
     public String listIngredients(Model model) {
-
+        User user = userSDJpaService.findById(1L);
+        model.addAttribute("user", user);
         model.addAttribute("ingredients", ingredientSDJpaService.findAll());
         return "/ingredient/index";
 
+    }
+    //SAVE TO CART
+    @PostMapping(value = "/ingredient/cart")
+    public String cart(User user, Model model) {
+        userSDJpaService.findById(1L).setShoppingList( user.getShoppingList());
+        userSDJpaService.save(userSDJpaService.findById(1L));
+        model.addAttribute("user", user);
+        return "/ingredient/ingredientConfirm";
     }
 
     //CREATE/SAVE
