@@ -2,6 +2,7 @@ package ca.gbc.recipeproject.controllers;
 
 import ca.gbc.recipeproject.model.Ingredient;
 import ca.gbc.recipeproject.model.Recipe;
+import ca.gbc.recipeproject.model.User;
 import ca.gbc.recipeproject.repositories.IngredientRepository;
 import ca.gbc.recipeproject.services.springdatajpa.IngredientSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.RecipeSDJpaService;
@@ -36,6 +37,7 @@ public class RecipeController {
     @RequestMapping({"", "/recipe", "/recipe/index", "/index.html"})
     public String listRecipes(Model model) {
 
+        model.addAttribute("user", userSDJpaService.findById(1L));
         model.addAttribute("recipes", recipeSDJpaService.findAll());
         return "/recipe/index";
 
@@ -68,6 +70,7 @@ public class RecipeController {
     @RequestMapping({"/recipe/{id}", "/{id}", "/recipe/recipe/{id}"})
     public String findRecipe(Model model, @PathVariable Long id) {
         Recipe recipe = recipeSDJpaService.findById(id);
+        model.addAttribute("user", userSDJpaService.findById(1L));
         model.addAttribute("findRecipe", recipe);
         return "/recipe/details";
     }
@@ -112,6 +115,30 @@ public class RecipeController {
         return "/recipe/recipeConfirm";
     }
 
+    // FAVOURITE RECIPE
+    @GetMapping("/recipe/recipe/{id}/favourite")
+    public String favouriteRecipe(@PathVariable("id") long id, Model model)
+    {
+        Recipe recipe = recipeSDJpaService.findById(id);
+
+        System.out.println("Recipe: " + recipe.getRecipeName());
+        User user  = userSDJpaService.findById(1L);
+        user.addToFavourite(recipe);
+        userSDJpaService.save(user);
+        model.addAttribute("recipe", recipe);
+        return "redirect:/recipe/index";
+    }
+
+    @GetMapping("/recipe/recipe/{id}/unfavourite")
+    public String UnfavouriteRecipe(@PathVariable("id") long id, Model model)
+    {
+        Recipe recipe = recipeSDJpaService.findById(id);
+        User user  = userSDJpaService.findById(1L);
+        user.getFavouriteRecipes().remove(recipe);
+        userSDJpaService.save(user);
+        model.addAttribute("recipe", recipe);
+        return "redirect:/recipe/index";
+    }
 
 
 

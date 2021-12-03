@@ -77,11 +77,11 @@ public class DataLoader implements CommandLineRunner {
         recipeSDJpaService.save(recipe1);
 
         // favouriting recipes
-
+        /*
         user1.addToFavourite(recipe1);
         user2.addToFavourite(recipe1);
         user2.addToFavourite(recipe2);
-
+*/
 
         // adding ingredients to shopping lists:
         user1.addToList(salt);

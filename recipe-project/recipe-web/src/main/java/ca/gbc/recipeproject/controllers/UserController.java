@@ -35,6 +35,15 @@ public class UserController {
         this.eventsSDJpaService = eventsSDJpaService;
 
     }
+
+    // List Favourite Recipes
+    @RequestMapping("/profile/recipes")
+    public String showFavourites(Model model) {
+        User user = userSDJpaService.findById(1L);
+        model.addAttribute("recipes", user.getFavouriteRecipes());
+        return "/profile/favourite-recipes";
+    }
+
     // List shoppling cart ingredients
 
     @RequestMapping("/profile/list")
@@ -107,7 +116,6 @@ public class UserController {
     }
 
 
-    //Delete Event
 
 
 

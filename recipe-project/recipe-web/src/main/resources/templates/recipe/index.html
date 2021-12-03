@@ -67,7 +67,7 @@
             <th>Description</th>
             <th>Servings</th>
             <th>Created By</th>
-            <th>Favourite</th>
+            <th>Favourited By You</th>
         </tr>
         </thead>
         <tbody>
@@ -79,7 +79,7 @@
             <td th:text="${recipe.getDescription()}"></td>
             <td th:text="${recipe.getServings()}"></td>
             <td th:text="${recipe.getAuthor().username}"></td>
-            <td><input class="star" type="checkbox" title="favourite button" checked></td>
+            <td><input class="star" type="checkbox" title="favourite button" checked disabled th:checked="${!recipe.getFavoriteByUsers().contains(user)}"></td>
         </tr>
         </tbody>
     </table>
