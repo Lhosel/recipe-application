@@ -5,6 +5,7 @@ import ca.gbc.recipeproject.services.RecipeService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -45,5 +46,8 @@ public class RecipeServiceMap extends AbstractMapService<Recipe, Long> implement
     public Set<Recipe> findByName(String searchWord) {
         return null;
     }
+
+    @Override
+    public List<Recipe> findByUsername(String username) { return null; }
 
 }

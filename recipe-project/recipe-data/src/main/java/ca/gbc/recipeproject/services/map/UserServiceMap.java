@@ -41,9 +41,4 @@ public class UserServiceMap extends AbstractMapService<User, Long> implements Us
         return null;
     }
 
-    @Override
-    public User getUserById(Long id) {
-        return null;
-    }
-
 }

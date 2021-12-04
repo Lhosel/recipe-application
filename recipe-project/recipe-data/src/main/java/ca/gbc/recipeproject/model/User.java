@@ -36,8 +36,10 @@ public class User extends BaseEntity {
     }
 
     public User addRole(Role role) {
+
         this.roles.add(role);
         return this;
+
     }
 
     // spring security stuff end

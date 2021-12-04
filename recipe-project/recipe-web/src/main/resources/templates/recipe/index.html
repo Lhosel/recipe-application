@@ -27,7 +27,6 @@
     </style>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Recipe Project</a>
@@ -45,18 +44,20 @@
                     <a class="nav-link" href="http://localhost:8090/recipe/create">Create</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8090/recipe/search">Search</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">Profile</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="btn btn-primary" href="#" role="button">Logout</a>
+                    <a class="btn btn-primary" href="/doLogout" role="button">Logout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
 <div class="container-xxl">
     <table class="table table-bordered">
         &nbsp;&nbsp;
@@ -82,12 +83,11 @@
             <td th:text="${recipe.getServings()}"></td>
             <td th:text="${recipe.getAuthor().username}"></td>
             <td><input class="star" type="checkbox" title="favourite button" checked disabled th:checked="${!recipe.getFavoriteByUsers().contains(user)}"></td>
-            <td><a th:href="@{/recipe/{id}/edit(id=${recipe.id})}">Edit</a> </td>
-            <td><a th:href="@{/recipe/{id}/delete(id=${recipe.id})}">Delete</a> </td>
+            <td><a class="btn btn-primary" th:href="@{/recipe/{id}/edit(id=${recipe.id})}">Edit</a> </td>
+            <td><a class="btn btn-primary" th:href="@{/recipe/{id}/delete(id=${recipe.id})}">Delete</a> </td>
         </tr>
         </tbody>
     </table>
 </div>
-
 </body>
 </html>

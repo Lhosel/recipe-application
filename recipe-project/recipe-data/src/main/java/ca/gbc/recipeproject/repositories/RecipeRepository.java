@@ -16,4 +16,7 @@ public interface RecipeRepository extends CrudRepository<Recipe, Long> {
     @Query("SELECT r FROM Recipe r WHERE lower(r.recipeName) LIKE %:searchWord%")
     Set<Recipe> findByName(@Param("searchWord") String searchWord);
 
+    @Query("SELECT r FROM Recipe r WHERE r.author.username LIKE %?1%")
+    List<Recipe> findByUsername(String username);
+
 }

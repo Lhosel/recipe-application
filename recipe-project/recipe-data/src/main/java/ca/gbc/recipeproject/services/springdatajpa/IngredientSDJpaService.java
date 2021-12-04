@@ -48,4 +48,5 @@ public class IngredientSDJpaService implements IngredientService {
     public void deleteById(Long id) {
         ingredientRepository.deleteById(id);
     }
+
 }

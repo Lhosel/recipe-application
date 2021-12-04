@@ -4,7 +4,6 @@ import ca.gbc.recipeproject.model.Ingredient;
 import ca.gbc.recipeproject.model.Meal;
 import ca.gbc.recipeproject.model.Recipe;
 import ca.gbc.recipeproject.model.User;
-import ca.gbc.recipeproject.repositories.IngredientRepository;
 import ca.gbc.recipeproject.services.springdatajpa.IngredientSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.MealSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.RecipeSDJpaService;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -26,7 +23,6 @@ public class RecipeController {
     private final UserSDJpaService userSDJpaService;
     private final MealSDJpaService mealSDJpaService;
     private IngredientSDJpaService ingredientSDJpaService;
-
 
     public RecipeController(RecipeSDJpaService recipeSDJpaService, UserSDJpaService userSDJpaService,
                             IngredientSDJpaService ingredientSDJpaService, MealSDJpaService mealSDJpaService) {
@@ -49,7 +45,6 @@ public class RecipeController {
     }
 
     // SEARCH
-
     @RequestMapping(value = {"/recipe/search", "/recipe/search.html"}, method = RequestMethod.GET)
     public String searchRecipes(Model model) {
         model.addAttribute("recipe", new Recipe());
@@ -71,7 +66,6 @@ public class RecipeController {
     }
 
     // DETAILS
-
     @RequestMapping({"/recipe/{id}"})
     public String findRecipe(Model model, @PathVariable Long id) {
         Recipe recipe = recipeSDJpaService.findById(id);
@@ -96,10 +90,7 @@ public class RecipeController {
         return "/ingredient/recipeSteps";
     }
 
-
-
     //CREATE/SAVE
-
     @RequestMapping({"/recipe/create", "/recipe/create.html"})
     public String create(Model model) {
         Recipe recipe = new Recipe();

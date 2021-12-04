@@ -7,7 +7,6 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Recipe Project</a>
@@ -33,19 +32,17 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="btn btn-primary" href="#" role="button">Logout</a>
+                    <a class="btn btn-primary" href="/doLogout" role="button">Logout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
 <div class="container-xxl">
     &nbsp;&nbsp;
     <p>The Recipe has been created!</p>
-    <button class="btn btn-lg btn-dark" onclick="location.href = 'http://localhost:8090/recipe/index';"
+    <button class="btn btn-primary" onclick="location.href = 'http://localhost:8090/recipe/index';"
             th:text="'Return'"></button>
 </div>
-
 </body>
 </html>

@@ -20,16 +20,13 @@ public class MealController {
 
     private final RecipeSDJpaService recipeSDJpaService;
     private final UserSDJpaService userSDJpaService;
-    private final IngredientSDJpaService ingredientSDJpaService;
     private final MealSDJpaService mealSDJpaService;
 
 
-    public MealController(RecipeSDJpaService recipeSDJpaService, UserSDJpaService userSDJpaService,
-                          IngredientSDJpaService ingredientSDJpaService, MealSDJpaService mealSDJpaService) {
+    public MealController(RecipeSDJpaService recipeSDJpaService, UserSDJpaService userSDJpaService, MealSDJpaService mealSDJpaService) {
 
         this.recipeSDJpaService = recipeSDJpaService;
         this.userSDJpaService = userSDJpaService;
-        this.ingredientSDJpaService = ingredientSDJpaService;
         this.mealSDJpaService = mealSDJpaService;
 
     }
@@ -40,6 +37,7 @@ public class MealController {
     public String listMeals(Model model) {
 
         model.addAttribute("meals", mealSDJpaService.findAll());
+
         return "/meal/index";
     }
 
@@ -47,19 +45,23 @@ public class MealController {
 
     @RequestMapping({"/meal/create", "/meal/create.html"})
     public String create(Model model) {
+
         Meal meal = new Meal();
         Set<Recipe> recipeList = recipeSDJpaService.findAll();
         model.addAttribute("recipeList", recipeList);
         model.addAttribute("meal", meal);
+
         return "/meal/create";
     }
 
     @PostMapping(value = "/meal/save")
     public String save(Meal meal, Model model) {
+
         meal.setUser(userSDJpaService.findById(1L));
         meal.setDate(new Date());
         mealSDJpaService.save(meal);
         model.addAttribute("meal", meal);
+
         return "/meal/mealConfirm";
     }
 

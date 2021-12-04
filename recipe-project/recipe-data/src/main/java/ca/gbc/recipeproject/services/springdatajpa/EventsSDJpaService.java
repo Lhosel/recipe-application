@@ -48,4 +48,5 @@ public class EventsSDJpaService implements EventsService {
     public void deleteById(Long id) {
         eventsRepository.deleteById(id);
     }
+
 }

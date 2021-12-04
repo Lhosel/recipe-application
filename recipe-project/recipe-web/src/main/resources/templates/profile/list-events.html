@@ -24,19 +24,20 @@
                     <a class="nav-link" href="http://localhost:8090/recipe/create">Create</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8090/recipe/search">Search</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">Profile</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="btn btn-primary" href="#" role="button">Register</a>
-                    <a class="btn btn-primary" href="#" role="button">Login</a>
+                    <a class="btn btn-primary" href="/doLogout" role="button">Logout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
 <div class="container-xxl">
     &nbsp;&nbsp;
     <h2>Shopping Cart</h2>
@@ -46,14 +47,13 @@
             <th>Event Name</th>
             <th>Update</th>
             <th>Delete</th>
-
         </tr>
         </thead>
         <tbody>
         <tr th:each="event : ${events}">
             <td th:text="${event.eventName}"></td>
-            <td><a th:href="@{/profile/event/edit/{id}(id=${event.id})}">Edit</a> </td>
-            <td><a th:href="@{/profile/event/delete/{id}(id=${event.id})}">Delete</a> </td>
+            <td><a class="btn btn-primary" th:href="@{/profile/event/edit/{id}(id=${event.id})}">Edit</a> </td>
+            <td><a class="btn btn-primary" th:href="@{/profile/event/delete/{id}(id=${event.id})}">Delete</a> </td>
         </tr>
         </tbody>
     </table>

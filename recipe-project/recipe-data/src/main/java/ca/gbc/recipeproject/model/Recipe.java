@@ -48,8 +48,10 @@ public class Recipe extends BaseEntity {
     private Set<User> favoriteByUsers = new HashSet<>();
 
     public Recipe addIngredient(Ingredient ingredient) {
+
         this.ingredients.add(ingredient);
         return this;
+
     }
 
     public String getRecipeName() {

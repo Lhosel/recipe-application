@@ -65,4 +65,5 @@ public class Ingredient extends BaseEntity {
     public void setUser(Set<User> user) {
         this.user = user;
     }
+
 }

@@ -40,19 +40,16 @@ public class DataLoader implements CommandLineRunner {
         user1.setEmail("kunga@gbc.ca");
         user1.setStatus(true);
         userSDJpaService.save(user1);
-        System.out.println(user1.getPassword());
-        System.out.println(user1.getUsername());
-
         roleSDJpaService.save(role);
         user1.addRole(role);
-        System.out.println(user1.getRoles().toString());
-
 
         User user2 = new User();
         user2.setUsername("Dominic");
         user2.setPassword("$2a$10$ks4XAfX96H3QcHhEjql0KO9.GHjWy1UeK50s/jQsK0XME4YuFs3WW");
         user2.setEmail("dom@gbc.ca");
+        user2.setStatus(true);
         userSDJpaService.save(user2);
+        user2.addRole(role);
 
         Ingredient salt = new Ingredient("salt", 20);
 
@@ -70,7 +67,6 @@ public class DataLoader implements CommandLineRunner {
 
         ingredientSDJpaService.save(salt);
         recipe1.addIngredient(salt);
-        // salt.addRecipe(recipe1);
 
         Recipe recipe2 = new Recipe();
         recipe2.setRecipeName("Banh Mi");
@@ -84,17 +80,9 @@ public class DataLoader implements CommandLineRunner {
 
         ingredientSDJpaService.save(pepper);
         recipe2.addIngredient(pepper);
-        // pepper.addRecipe(recipe2);
         recipeSDJpaService.save(recipe2);
         recipe1.addIngredient(pepper);
         recipeSDJpaService.save(recipe1);
-
-        // favouriting recipes
-        /*
-        user1.addToFavourite(recipe1);
-        user2.addToFavourite(recipe1);
-        user2.addToFavourite(recipe2);
-*/
 
         // adding ingredients to shopping lists:
         user1.addToList(salt);
@@ -145,4 +133,5 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Loaded Recipes...");
 
     }
+
 }

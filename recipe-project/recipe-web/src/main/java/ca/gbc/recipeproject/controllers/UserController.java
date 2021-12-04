@@ -17,21 +17,13 @@ import java.util.Date;
 @Controller
 public class UserController {
 
-    private final RecipeSDJpaService recipeSDJpaService;
     private final UserSDJpaService userSDJpaService;
-    private final IngredientSDJpaService ingredientSDJpaService;
-    private final MealSDJpaService mealSDJpaService;
     private final EventsSDJpaService eventsSDJpaService;
 
 
-    public UserController(RecipeSDJpaService recipeSDJpaService, UserSDJpaService userSDJpaService,
-                          IngredientSDJpaService ingredientSDJpaService, MealSDJpaService mealSDJpaService,
-                          EventsSDJpaService eventsSDJpaService) {
+    public UserController(UserSDJpaService userSDJpaService, EventsSDJpaService eventsSDJpaService) {
 
-        this.recipeSDJpaService = recipeSDJpaService;
         this.userSDJpaService = userSDJpaService;
-        this.ingredientSDJpaService = ingredientSDJpaService;
-        this.mealSDJpaService = mealSDJpaService;
         this.eventsSDJpaService = eventsSDJpaService;
 
     }
@@ -39,17 +31,20 @@ public class UserController {
     // List Favourite Recipes
     @RequestMapping("/profile/recipes")
     public String showFavourites(Model model) {
+
         User user = userSDJpaService.findById(1L);
         model.addAttribute("recipes", user.getFavouriteRecipes());
+
         return "/profile/favourite-recipes";
     }
 
-    // List shoppling cart ingredients
-
+    // List shopping cart ingredients
     @RequestMapping("/profile/list")
     public String showCart(Model model) {
+
         User user = userSDJpaService.findById(1L);
         model.addAttribute("ingredients", user.getShoppingList());
+
         return "/profile/list-cart";
     }
 
@@ -57,9 +52,12 @@ public class UserController {
 
     @RequestMapping("/profile/events")
     public String showEvents(Model model) {
+
         User user = userSDJpaService.findById(1L);
         model.addAttribute("events", user.getEventList());
+
         return "/profile/list-events";
+
     }
 
 
@@ -68,24 +66,29 @@ public class UserController {
 
     @RequestMapping({"/profile/event/create", "/profile/event/create.html"})
     public String create(Model model) {
+
         Events event = new Events();
         User user = new User();
+
         model.addAttribute("user", user);
         model.addAttribute("event", event);
+
         return "/profile/create-event";
     }
 
     @PostMapping(value = "/profile/event/save")
     public String save(Events event, User user, Model model) {
+
         event.setEventDate(new Date());
         event.setUser(userSDJpaService.findById(1L));
         user.getEventList().add(event);
+
         userSDJpaService.findById(1L).setEventList(user.getEventList());
         userSDJpaService.save(userSDJpaService.findById(1L));
         model.addAttribute("event", event);
+
         return "/profile/profileConfirm";
     }
-
 
     // UPDATE Event
     @GetMapping("/profile/event/edit/{id}")
@@ -95,29 +98,28 @@ public class UserController {
 
         model.addAttribute("event", event);
         return "/profile/update-event";
+
     }
 
     // DELETE Event
-
     @GetMapping("/profile/event/delete/{id}")
     public String deleteEvent(@PathVariable("id") long id, Model model) {
+
         Events event = eventsSDJpaService.findById(id);
 
         eventsSDJpaService.delete(event);
         return "redirect:/profile/events";
+
     }
 
 
     @PostMapping("/profile/event/edit/{id}")
     public String updateEvent(@PathVariable("id") long id, Events event, Model model) {
+
         event.setUser(userSDJpaService.findById(1L));
         eventsSDJpaService.save(event);
         return "redirect:/profile/events";
+
     }
-
-
-
-
-
 
 }
