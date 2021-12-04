@@ -1,7 +1,9 @@
 package ca.gbc.recipeproject.controllers;
 
 import ca.gbc.recipeproject.model.*;
+import ca.gbc.recipeproject.services.ExcelFileService;
 import ca.gbc.recipeproject.services.springdatajpa.*;
+import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Date;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -18,13 +24,16 @@ public class UserController {
     private final UserSDJpaService userSDJpaService;
     private final EventsSDJpaService eventsSDJpaService;
     private final IngredientSDJpaService ingredientSDJpaService;
+    private final ExcelFileService excelFileService;
 
 
-    public UserController(UserSDJpaService userSDJpaService, EventsSDJpaService eventsSDJpaService, IngredientSDJpaService ingredientSDJpaService) {
+    public UserController(UserSDJpaService userSDJpaService, EventsSDJpaService eventsSDJpaService, IngredientSDJpaService ingredientSDJpaService
+    , ExcelFileService excelFileService) {
 
         this.userSDJpaService = userSDJpaService;
         this.eventsSDJpaService = eventsSDJpaService;
         this.ingredientSDJpaService = ingredientSDJpaService;
+        this.excelFileService = excelFileService;
 
     }
 
@@ -47,6 +56,15 @@ public class UserController {
         model.addAttribute("ingredientList", ingredientSDJpaService.findAll());
 
         return "/profile/list-cart";
+    }
+
+    @GetMapping("/profile/list/download")
+    public void downloadExcelFile(HttpServletResponse response) throws IOException {
+        Set<Ingredient> shoppingList = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getShoppingList();
+        ByteArrayInputStream byteArrayInputStream = excelFileService.export(shoppingList);
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=shoppingList.xlsx");
+        IOUtils.copy(byteArrayInputStream, response.getOutputStream());
     }
 
     // Delete ingredient from cart
