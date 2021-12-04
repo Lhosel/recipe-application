@@ -71,12 +71,12 @@
         </tr>
         </tbody>
     </table>
-    <a th:href="@{'/recipe/recipe/' + ${findRecipe.getId()} + '/ingredients'}">Show Ingredients</a>
-    <a th:href="@{'/recipe/recipe/' + ${findRecipe.getId()} + '/steps'}">Show Steps</a>
+    <a th:href="@{'/recipe/' + ${findRecipe.getId()} + '/ingredients'}">Show Ingredients</a>
+    <a th:href="@{'/recipe/' + ${findRecipe.getId()} + '/steps'}">Show Steps</a>
 
 
-    <a th:if="${findRecipe.getFavoriteByUsers().contains(user)}" th:href="@{'/recipe/recipe/' +${findRecipe.getId()} + '/unfavourite'}">Unfavourite Recipe</a>
-    <a th:unless="${findRecipe.getFavoriteByUsers().contains(user)}" th:href="@{'/recipe/recipe/' +${findRecipe.getId()} + '/favourite'}">Mark as Favourite</a>
+    <a th:if="${findRecipe.getFavoriteByUsers().contains(user)}" th:href="@{'/recipe/' +${findRecipe.getId()} + '/unfavourite'}">Unfavourite Recipe</a>
+    <a th:unless="${findRecipe.getFavoriteByUsers().contains(user)}" th:href="@{'/recipe/' +${findRecipe.getId()} + '/favourite'}">Mark as Favourite</a>
 </div>
 </table>
 </body>

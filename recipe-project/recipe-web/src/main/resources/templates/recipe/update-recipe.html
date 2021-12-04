@@ -42,7 +42,7 @@
 
 <div class="container-xxl">
     &nbsp;&nbsp;
-    <form method="post" th:action="@{/recipe/save}" th:object="${recipe}">
+    <form method="post" th:action="@{/recipe/{id}/edit(id=${recipe.id})}" th:object="${recipe}">
         <div class="mb-3">
             <label th:text="'Recipe Name'"></label>
             <input class="form-control" th:field="*{recipeName}" th:oninput="this.setCustomValidity('')" th:oninvalid="this.setCustomValidity('Recipe name cannot be blank')"
@@ -70,7 +70,7 @@
 
             <label th:text="'Ingredients (CTRL CLICK FOR SEVERAL INGREDIENTS, CTRL CLICK SELECTED INGREDIENTS TO DESELECT)'">Ingredients:</label>
             <select th:field="*{ingredients}" th:oninput="this.setCustomValidity('')"  th:required="true" multiple style="resize: vertical; height: 200px" class="form-control">
-                <option  th:each="i : ${ingredientList}" th:value="${i.id}" th:text="${i.ingredientName}" />
+                <option  th:each="i : ${ingredientList}" th:value="${i.id}" th:text="${i.ingredientName}" th:selected="${recipe.getIngredients().contains(i)}" />
             </select>
 
             <h5>Can't find the ingredient you're looking for?</h5>

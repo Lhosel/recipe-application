@@ -68,18 +68,22 @@
             <th>Servings</th>
             <th>Created By</th>
             <th>Favourited By You</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="recipe : ${recipes}">
             <td>
-                <a th:href="@{recipe/{id}(id = ${recipe.getId()})}" th:text="${recipe.getId()}"/>
+                <a th:href="@{/recipe/{id}(id = ${recipe.getId()})}" th:text="${recipe.getId()}"/>
             </td>
             <td th:text="${recipe.getRecipeName()}"></td>
             <td th:text="${recipe.getDescription()}"></td>
             <td th:text="${recipe.getServings()}"></td>
             <td th:text="${recipe.getAuthor().username}"></td>
             <td><input class="star" type="checkbox" title="favourite button" checked disabled th:checked="${!recipe.getFavoriteByUsers().contains(user)}"></td>
+            <td><a th:href="@{/recipe/{id}/edit(id=${recipe.id})}">Edit</a> </td>
+            <td><a th:href="@{/recipe/{id}/delete(id=${recipe.id})}">Delete</a> </td>
         </tr>
         </tbody>
     </table>

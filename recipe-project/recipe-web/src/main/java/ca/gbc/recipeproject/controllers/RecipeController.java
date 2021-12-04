@@ -1,10 +1,12 @@
 package ca.gbc.recipeproject.controllers;
 
 import ca.gbc.recipeproject.model.Ingredient;
+import ca.gbc.recipeproject.model.Meal;
 import ca.gbc.recipeproject.model.Recipe;
 import ca.gbc.recipeproject.model.User;
 import ca.gbc.recipeproject.repositories.IngredientRepository;
 import ca.gbc.recipeproject.services.springdatajpa.IngredientSDJpaService;
+import ca.gbc.recipeproject.services.springdatajpa.MealSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.RecipeSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.UserSDJpaService;
 import org.springframework.stereotype.Controller;
@@ -22,19 +24,22 @@ public class RecipeController {
 
     private final RecipeSDJpaService recipeSDJpaService;
     private final UserSDJpaService userSDJpaService;
+    private final MealSDJpaService mealSDJpaService;
     private IngredientSDJpaService ingredientSDJpaService;
 
 
-    public RecipeController(RecipeSDJpaService recipeSDJpaService, UserSDJpaService userSDJpaService, IngredientSDJpaService ingredientSDJpaService) {
+    public RecipeController(RecipeSDJpaService recipeSDJpaService, UserSDJpaService userSDJpaService,
+                            IngredientSDJpaService ingredientSDJpaService, MealSDJpaService mealSDJpaService) {
 
         this.recipeSDJpaService = recipeSDJpaService;
         this.userSDJpaService = userSDJpaService;
         this.ingredientSDJpaService = ingredientSDJpaService;
+        this.mealSDJpaService = mealSDJpaService;
 
     }
 
     // INDEX / DISPLAY ALL RECIPES
-    @RequestMapping({"", "/recipe", "/recipe/index", "/index.html"})
+    @RequestMapping({"/recipe", "/recipe/index"})
     public String listRecipes(Model model) {
 
         model.addAttribute("user", userSDJpaService.findById(1L));
@@ -67,7 +72,7 @@ public class RecipeController {
 
     // DETAILS
 
-    @RequestMapping({"/recipe/{id}", "/{id}", "/recipe/recipe/{id}"})
+    @RequestMapping({"/recipe/{id}"})
     public String findRecipe(Model model, @PathVariable Long id) {
         Recipe recipe = recipeSDJpaService.findById(id);
         model.addAttribute("user", userSDJpaService.findById(1L));
@@ -115,8 +120,49 @@ public class RecipeController {
         return "/recipe/recipeConfirm";
     }
 
+    // UPDATE RECIPE
+    @GetMapping("/recipe/{id}/edit")
+    public String showUpdateIngredientForm(@PathVariable("id") long id, Model model)
+    {
+        Recipe recipe = recipeSDJpaService.findById(id);
+
+        Set<Ingredient> ingredientsList = ingredientSDJpaService.findAll();
+        model.addAttribute("ingredientList", ingredientsList);
+        model.addAttribute("recipe", recipe);
+        return "/recipe/update-recipe";
+    }
+
+    // DELETE RECIPE
+
+    @GetMapping("/recipe/{id}/delete")
+    public String deleteIngredient(@PathVariable("id") long id, Model model) {
+        Recipe recipe = recipeSDJpaService.findById(id);
+
+        // Removing all references to recipe that's going to be deleted
+        for (User u : userSDJpaService.findAll()) {
+            u.getFavouriteRecipes().remove(recipe);
+        }
+        // For every user's meal that contains the deleted recipe, remove meal.
+        for (Meal m : mealSDJpaService.findAll()) {
+            if (m.getRecipe() == recipe)
+                mealSDJpaService.delete(m);
+        }
+        recipeSDJpaService.delete(recipe);
+        return "redirect:/recipe/index";
+    }
+
+    @PostMapping("/recipe/{id}/edit")
+    public String updateIngredient(@PathVariable("id") long id, Recipe recipe, Model model) {
+        recipe.setAuthor(userSDJpaService.findById(1L));
+        recipe.setCreationDate(new Date());
+        recipeSDJpaService.save(recipe);
+        return "redirect:/recipe/index";
+    }
+
+
+
     // FAVOURITE RECIPE
-    @GetMapping("/recipe/recipe/{id}/favourite")
+    @GetMapping("/recipe/{id}/favourite")
     public String favouriteRecipe(@PathVariable("id") long id, Model model)
     {
         Recipe recipe = recipeSDJpaService.findById(id);
@@ -129,7 +175,7 @@ public class RecipeController {
         return "redirect:/recipe/index";
     }
 
-    @GetMapping("/recipe/recipe/{id}/unfavourite")
+    @GetMapping("/recipe/{id}/unfavourite")
     public String UnfavouriteRecipe(@PathVariable("id") long id, Model model)
     {
         Recipe recipe = recipeSDJpaService.findById(id);
