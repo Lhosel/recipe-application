@@ -48,4 +48,16 @@ public class UserSDJpaService implements UserService {
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
+
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.getUserByUsername(username);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.getUserById(id);
+    }
+
 }

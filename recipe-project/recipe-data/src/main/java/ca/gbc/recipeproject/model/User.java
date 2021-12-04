@@ -1,6 +1,7 @@
 package ca.gbc.recipeproject.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,7 +9,7 @@ import java.util.Set;
 @Table(name = "USERS")
 public class User extends BaseEntity {
 
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", unique = true)
     private String username;
 
     @Column(name = "PASSWORD")
@@ -16,6 +17,30 @@ public class User extends BaseEntity {
 
     @Column(name = "EMAIL")
     private String email;
+
+    // spring security stuff start
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "USER_ROLES", joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public User addRole(Role role) {
+        this.roles.add(role);
+        return this;
+    }
+
+    // spring security stuff end
 
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "author")
     private Set<Recipe> createdRecipes = new HashSet<>();

@@ -15,29 +15,42 @@ public class DataLoader implements CommandLineRunner {
     private final MealSDJpaService mealSDJpaService;
     private final IngredientSDJpaService ingredientSDJpaService;
     private final EventsSDJpaService eventsSDJpaService;
+    private final RoleSDJpaService roleSDJpaService;
 
-    public DataLoader(UserSDJpaService userSDJpaService, RecipeSDJpaService recipeSDJpaService, MealSDJpaService mealSDJpaService, IngredientSDJpaService ingredientSDJpaService, EventsSDJpaService eventsSDJpaService) {
+    public DataLoader(UserSDJpaService userSDJpaService, RecipeSDJpaService recipeSDJpaService, MealSDJpaService mealSDJpaService, IngredientSDJpaService ingredientSDJpaService, EventsSDJpaService eventsSDJpaService, RoleSDJpaService roleSDJpaService) {
 
         this.userSDJpaService = userSDJpaService;
         this.recipeSDJpaService = recipeSDJpaService;
         this.mealSDJpaService = mealSDJpaService;
         this.ingredientSDJpaService = ingredientSDJpaService;
         this.eventsSDJpaService = eventsSDJpaService;
+        this.roleSDJpaService = roleSDJpaService;
 
     }
 
     @Override
     public void run(String... args) throws Exception {
 
+        Role role = new Role();
+        role.setName("admin");
+
         User user1 = new User();
         user1.setUsername("Kunga");
-        user1.setPassword("123");
+        user1.setPassword("$2a$10$ks4XAfX96H3QcHhEjql0KO9.GHjWy1UeK50s/jQsK0XME4YuFs3WW");
         user1.setEmail("kunga@gbc.ca");
+        user1.setStatus(true);
         userSDJpaService.save(user1);
+        System.out.println(user1.getPassword());
+        System.out.println(user1.getUsername());
+
+        roleSDJpaService.save(role);
+        user1.addRole(role);
+        System.out.println(user1.getRoles().toString());
+
 
         User user2 = new User();
         user2.setUsername("Dominic");
-        user2.setPassword("123");
+        user2.setPassword("$2a$10$ks4XAfX96H3QcHhEjql0KO9.GHjWy1UeK50s/jQsK0XME4YuFs3WW");
         user2.setEmail("dom@gbc.ca");
         userSDJpaService.save(user2);
 

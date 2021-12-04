@@ -10,10 +10,10 @@ import java.util.Set;
 
 public interface RecipeRepository extends CrudRepository<Recipe, Long> {
 
-
     @Query("SELECT r FROM Recipe r WHERE r.view = TRUE")
     Set<Recipe> findPublic();
 
     @Query("SELECT r FROM Recipe r WHERE lower(r.recipeName) LIKE %:searchWord%")
     Set<Recipe> findByName(@Param("searchWord") String searchWord);
+
 }

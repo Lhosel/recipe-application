@@ -36,4 +36,14 @@ public class UserServiceMap extends AbstractMapService<User, Long> implements Us
         super.deleteById(id);
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return null;
+    }
+
 }
