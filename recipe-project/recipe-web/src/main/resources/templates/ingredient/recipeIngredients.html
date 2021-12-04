@@ -56,6 +56,17 @@
         </tr>
         </tbody>
     </table>
+
+    <form method="post" th:action="@{/ingredient/cart}" th:object="${user}">
+        <div class="mb-3">
+            <label th:text="'Add Ingredients To Cart  (CTRL CLICK FOR SEVERAL INGREDIENTS, CTRL CLICK SELECTED INGREDIENTS TO DESELECT)'">Ingredients:</label>
+            <select th:field="*{shoppingList}" th:oninput="this.setCustomValidity('')"  th:required="true" multiple style="resize: vertical; height: 200px" class="form-control">
+                <option  th:each="ingredient : ${findRecipe.ingredients}" th:value="${ingredient.id}" th:text="${ingredient.ingredientName}" />
+            </select>
+        </div>
+        <button class="btn btn-primary" th:text="'Save'" type="submit"></button>
+    </form>
+
     <a class="btn btn-primary" th:href="@{/recipe/{id}(id = ${findRecipe.getId()})}">Back</a>
 </div>
 </table>

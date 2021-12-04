@@ -6,6 +6,7 @@ import ca.gbc.recipeproject.model.User;
 import ca.gbc.recipeproject.services.springdatajpa.IngredientSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.RecipeSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.UserSDJpaService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +37,7 @@ public class IngredientController {
     @RequestMapping({"", "/ingredient", "/ingredient/index", "/index.html"})
     public String listIngredients(Model model) {
 
-        User user = userSDJpaService.findById(1L);
+        User user = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("user", user);
         model.addAttribute("ingredients", ingredientSDJpaService.findAll());
 
@@ -47,8 +48,8 @@ public class IngredientController {
     @PostMapping(value = "/ingredient/cart")
     public String cart(User user, Model model) {
 
-        userSDJpaService.findById(1L).setShoppingList( user.getShoppingList());
-        userSDJpaService.save(userSDJpaService.findById(1L));
+        userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).setShoppingList(user.getShoppingList());
+        userSDJpaService.save(userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         model.addAttribute("user", user);
 
         return "/ingredient/ingredientConfirm";

@@ -8,6 +8,8 @@ import ca.gbc.recipeproject.services.springdatajpa.IngredientSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.MealSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.RecipeSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.UserSDJpaService;
+import org.eclipse.aether.repository.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +39,10 @@ public class RecipeController {
     // INDEX / DISPLAY ALL RECIPES
     @RequestMapping({"/recipe", "/recipe/index"})
     public String listRecipes(Model model) {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        model.addAttribute("user", userSDJpaService.findById(1L));
+        model.addAttribute("user", userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+
         model.addAttribute("recipes", recipeSDJpaService.findAll());
         return "/recipe/index";
 
@@ -69,7 +73,8 @@ public class RecipeController {
     @RequestMapping({"/recipe/{id}"})
     public String findRecipe(Model model, @PathVariable Long id) {
         Recipe recipe = recipeSDJpaService.findById(id);
-        model.addAttribute("user", userSDJpaService.findById(1L));
+
+        model.addAttribute("user", userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         model.addAttribute("findRecipe", recipe);
         return "/recipe/details";
     }
@@ -79,6 +84,7 @@ public class RecipeController {
     public String getRecipeIngredients(Model model, @PathVariable Long id) {
         Recipe recipe = recipeSDJpaService.findById(id);
         model.addAttribute("findRecipe", recipe);
+        model.addAttribute("user", userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "/ingredient/recipeIngredients";
     }
 
@@ -103,7 +109,7 @@ public class RecipeController {
     @PostMapping(value = "/recipe/save")
     public String save(Recipe recipe, Model model) {
         System.out.println(recipe.toString());
-        recipe.setAuthor(userSDJpaService.findById(1L));
+        recipe.setAuthor(userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         recipe.setCreationDate(new Date());
         System.out.println(recipe.getIngredients().size());
         recipeSDJpaService.save(recipe);
@@ -144,7 +150,7 @@ public class RecipeController {
 
     @PostMapping("/recipe/{id}/edit")
     public String updateIngredient(@PathVariable("id") long id, Recipe recipe, Model model) {
-        recipe.setAuthor(userSDJpaService.findById(1L));
+        recipe.setAuthor(userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         recipe.setCreationDate(new Date());
         recipeSDJpaService.save(recipe);
         return "redirect:/recipe/index";
@@ -159,7 +165,7 @@ public class RecipeController {
         Recipe recipe = recipeSDJpaService.findById(id);
 
         System.out.println("Recipe: " + recipe.getRecipeName());
-        User user  = userSDJpaService.findById(1L);
+        User user  = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         user.addToFavourite(recipe);
         userSDJpaService.save(user);
         model.addAttribute("recipe", recipe);
@@ -170,7 +176,7 @@ public class RecipeController {
     public String UnfavouriteRecipe(@PathVariable("id") long id, Model model)
     {
         Recipe recipe = recipeSDJpaService.findById(id);
-        User user  = userSDJpaService.findById(1L);
+        User user  = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         user.getFavouriteRecipes().remove(recipe);
         userSDJpaService.save(user);
         model.addAttribute("recipe", recipe);

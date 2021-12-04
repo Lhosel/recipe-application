@@ -83,8 +83,9 @@
             <td th:text="${recipe.getServings()}"></td>
             <td th:text="${recipe.getAuthor().username}"></td>
             <td><input class="star" type="checkbox" title="favourite button" checked disabled th:checked="${!recipe.getFavoriteByUsers().contains(user)}"></td>
-            <td><a class="btn btn-primary" th:href="@{/recipe/{id}/edit(id=${recipe.id})}">Edit</a> </td>
-            <td><a class="btn btn-primary" th:href="@{/recipe/{id}/delete(id=${recipe.id})}">Delete</a> </td>
+
+            <td><a class="btn btn-primary" th:if="${recipe.getAuthor()==user}" th:href="@{/recipe/{id}/edit(id=${recipe.id})}">Edit</a> </td>
+            <td><a class="btn btn-primary" th:if="${recipe.getAuthor()==user}" th:href="@{/recipe/{id}/delete(id=${recipe.id})}">Delete</a> </td>
         </tr>
         </tbody>
     </table>

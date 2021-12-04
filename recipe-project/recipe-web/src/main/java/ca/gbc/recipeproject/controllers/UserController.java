@@ -1,10 +1,8 @@
 package ca.gbc.recipeproject.controllers;
 
-import ca.gbc.recipeproject.model.Events;
-import ca.gbc.recipeproject.model.Ingredient;
-import ca.gbc.recipeproject.model.Recipe;
-import ca.gbc.recipeproject.model.User;
+import ca.gbc.recipeproject.model.*;
 import ca.gbc.recipeproject.services.springdatajpa.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +17,14 @@ public class UserController {
 
     private final UserSDJpaService userSDJpaService;
     private final EventsSDJpaService eventsSDJpaService;
+    private final IngredientSDJpaService ingredientSDJpaService;
 
 
-    public UserController(UserSDJpaService userSDJpaService, EventsSDJpaService eventsSDJpaService) {
+    public UserController(UserSDJpaService userSDJpaService, EventsSDJpaService eventsSDJpaService, IngredientSDJpaService ingredientSDJpaService) {
 
         this.userSDJpaService = userSDJpaService;
         this.eventsSDJpaService = eventsSDJpaService;
+        this.ingredientSDJpaService = ingredientSDJpaService;
 
     }
 
@@ -32,7 +32,7 @@ public class UserController {
     @RequestMapping("/profile/recipes")
     public String showFavourites(Model model) {
 
-        User user = userSDJpaService.findById(1L);
+        User user = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("recipes", user.getFavouriteRecipes());
 
         return "/profile/favourite-recipes";
@@ -42,18 +42,32 @@ public class UserController {
     @RequestMapping("/profile/list")
     public String showCart(Model model) {
 
-        User user = userSDJpaService.findById(1L);
+        User user = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("ingredients", user.getShoppingList());
+        model.addAttribute("ingredientList", ingredientSDJpaService.findAll());
 
         return "/profile/list-cart";
     }
+
+    // Delete ingredient from cart
+    @GetMapping("/profile/list/{id}/remove")
+    public String deleteIngredient(@PathVariable("id") long id, Model model) {
+        Ingredient ingredient = ingredientSDJpaService.findById(id);
+        User user = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        user.getShoppingList().remove(ingredient);
+        userSDJpaService.save(user);
+        return "redirect:/profile/list";
+    }
+
+
+
 
     // List All Events
 
     @RequestMapping("/profile/events")
     public String showEvents(Model model) {
 
-        User user = userSDJpaService.findById(1L);
+        User user = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("events", user.getEventList());
 
         return "/profile/list-events";
@@ -80,11 +94,11 @@ public class UserController {
     public String save(Events event, User user, Model model) {
 
         event.setEventDate(new Date());
-        event.setUser(userSDJpaService.findById(1L));
+        event.setUser(userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         user.getEventList().add(event);
 
         userSDJpaService.findById(1L).setEventList(user.getEventList());
-        userSDJpaService.save(userSDJpaService.findById(1L));
+        userSDJpaService.save(userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         model.addAttribute("event", event);
 
         return "/profile/profileConfirm";
@@ -116,7 +130,7 @@ public class UserController {
     @PostMapping("/profile/event/edit/{id}")
     public String updateEvent(@PathVariable("id") long id, Events event, Model model) {
 
-        event.setUser(userSDJpaService.findById(1L));
+        event.setUser(userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         eventsSDJpaService.save(event);
         return "redirect:/profile/events";
 

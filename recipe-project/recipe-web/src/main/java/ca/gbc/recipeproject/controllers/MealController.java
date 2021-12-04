@@ -7,6 +7,7 @@ import ca.gbc.recipeproject.services.springdatajpa.IngredientSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.MealSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.RecipeSDJpaService;
 import ca.gbc.recipeproject.services.springdatajpa.UserSDJpaService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class MealController {
     @RequestMapping({"", "/meal", "/meal/index", "/index.html"})
     public String listMeals(Model model) {
 
-        model.addAttribute("meals", mealSDJpaService.findAll());
+        model.addAttribute("meals", userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getMeals());
 
         return "/meal/index";
     }
@@ -57,7 +58,7 @@ public class MealController {
     @PostMapping(value = "/meal/save")
     public String save(Meal meal, Model model) {
 
-        meal.setUser(userSDJpaService.findById(1L));
+        meal.setUser(userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         meal.setDate(new Date());
         mealSDJpaService.save(meal);
         model.addAttribute("meal", meal);

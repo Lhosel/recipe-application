@@ -47,6 +47,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Amount</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -54,9 +55,11 @@
             <td th:text="${ingredient.getId()}"></td>
             <td th:text="${ingredient.getIngredientName()}"></td>
             <td th:text="${ingredient.getAmount()}"></td>
+            <td><a class="btn btn-primary" th:href="@{/profile/list/{id}/remove(id=${ingredient.id})}">Delete</a> </td>
         </tr>
         </tbody>
     </table>
+    <a class="btn btn-primary" th:href="@{/ingredient/index}">Go To Ingredient List to Add to Cart</a>
 </div>
 </table>
 </body>
