@@ -37,6 +37,15 @@ public class UserController {
 
     }
 
+    @RequestMapping({"/profile", "/profile/index"})
+    public String showIndex(Model model) {
+        User user = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("user", user);
+        return "/profile/index";
+    }
+
+
+
     // List Favourite Recipes
     @RequestMapping("/profile/recipes")
     public String showFavourites(Model model) {
@@ -113,9 +122,7 @@ public class UserController {
 
         event.setEventDate(new Date());
         event.setUser(userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
-        user.getEventList().add(event);
-
-        userSDJpaService.findById(1L).setEventList(user.getEventList());
+        userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getEventList().add(event);
         userSDJpaService.save(userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         model.addAttribute("event", event);
 

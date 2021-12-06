@@ -1,6 +1,5 @@
 package ca.gbc.recipeproject.config;
 
-import ca.gbc.recipeproject.services.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

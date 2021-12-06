@@ -1,4 +1,4 @@
-package ca.gbc.recipeproject.services;
+package ca.gbc.recipeproject.config;
 
 import ca.gbc.recipeproject.config.MyUserDetails;
 import ca.gbc.recipeproject.model.User;

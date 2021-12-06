@@ -53,12 +53,13 @@
         <div class="mb-3">
             <label th:text="'Event Name'"></label>
             <input class="form-control" th:field="*{eventName}" th:oninput="this.setCustomValidity('')"
-                   th:oninvalid="this.setCustomValidity('Ingredient name cannot be blank')"
+                   th:oninvalid="this.setCustomValidity('Event name cannot be blank')"
                    th:required="true"
                    type="text">
         </div>
         <button class="btn btn-primary" th:text="'Update Event'" type="submit"></button>
     </form>
+    <a th:href="@{/profile}" class="btn btn-primary">Go Back</a>
 </div>
 </body>
 </html>
