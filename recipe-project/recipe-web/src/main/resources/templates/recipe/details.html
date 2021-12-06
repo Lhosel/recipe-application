@@ -72,6 +72,7 @@
     <a class="btn btn-primary" th:href="@{'/recipe/' + ${findRecipe.getId()} + '/steps'}">Show Steps</a>
     <a th:if="${findRecipe.getFavoriteByUsers().contains(user)}" class="btn btn-primary" th:href="@{'/recipe/' +${findRecipe.getId()} + '/unfavourite'}">Unfavourite</a>
     <a class="btn btn-primary" th:unless="${findRecipe.getFavoriteByUsers().contains(user)}" th:href="@{'/recipe/' +${findRecipe.getId()} + '/favourite'}">Mark as Favourite</a>
+    <a th:href="@{/recipe}" class="btn btn-primary">Go Back</a>
 </div>
 </table>
 </body>
