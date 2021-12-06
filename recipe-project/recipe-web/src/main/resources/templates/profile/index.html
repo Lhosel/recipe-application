@@ -19,16 +19,28 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8090/recipe/index">Recipes</a>
+                    <a class="nav-link active" href="http://localhost:8090/recipe/index">Recipes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8090/recipe/create">Create</a>
+                    <a class="nav-link" href="http://localhost:8090/ingredient">Ingredients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8090/recipe/create">Create Recipe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8090/ingredient/create">Create Ingredient</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8090/profile/event/create">Create Event</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8090/meal/create">Create Meal</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8090/recipe/search">Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" href="http://localhost:8090/profile">Profile</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -41,26 +53,47 @@
 </nav>
 <div class="container-xxl grid-container">
     &nbsp;
-
     <div >
         <div class="item1"><h1>Profile Index Page</h1>
-            <h2 th:text="'Welcome to your profile page, ' + ${user.getUsername()} + '! This is where the magic happens.'"></h2>
-
+            &nbsp;
+            <h4 th:text="'Welcome to your profile page, ' + ${user.getUsername()}"></h4>
         </div>
-        <div class="item2">Menu<h3>Get user account stuff</h3></div>
-        <div class="item3"><a th:href="@{/profile/list}" class="btn btn-primary">View your Shopping Cart</a>
-            <a th:href="@{/profile/recipes}" class="btn btn-primary">View your Favourite Recipes</a>
-        </div>
-        <div class="item4">
-            <a th:href="@{/meal}" class="btn btn-primary">View your Planned Meals</a>
-            <a th:href="@{/meal/create}" class="btn btn-primary">Plan a Meal</a>
-        </div>
-        <div class="item5">
-            <a th:href="@{/profile/events}" class="btn btn-primary">View your Events</a>
-            <a th:href="@{/profile/event/create}" class="btn btn-primary">Create an Event</a>
+        &nbsp;
+        <h4>This is there the magic happens.</h4>
+        &nbsp;&nbsp;
+        <div th:style="'margin: auto; width: 70%; padding: 10px;'" class="container">
+            <div class="row">
+                <div th:style="'text-align: center;'" class="row">
+                    <div class="col">
+                        <p>View all the items in your cart</p>
+                        <a th:href="@{/profile/list}" class="btn btn-primary">View your Shopping Cart</a>
+                    </div>
+                    <div class="col">
+                        <p>View all the recipes you favourited</p>
+                        <a th:href="@{/profile/recipes}" class="btn btn-primary">View your Favourite Recipes</a>
+                    </div>
+                    <div class="col">
+                        <p>View all the meals you have planned</p>
+                        <a th:href="@{/meal}" class="btn btn-primary">View your Planned Meals</a>
+                    </div>
+                </div>
+                <div th:style="'margin-top: 24px; text-align: center;'" class="row">
+                    <div class="col">
+                        <p>Start planning your meals</p>
+                        <a th:href="@{/meal/create}" class="btn btn-primary">Plan a Meal</a>
+                    </div>
+                    <div class="col">
+                        <p>View all the events you have created</p>
+                        <a th:href="@{/profile/events}" class="btn btn-primary">View your Events</a>
+                    </div>
+                    <div class="col">
+                        <p>Create an event for yourself</p>
+                        <a th:href="@{/profile/event/create}" class="btn btn-primary">Create an Event</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
 </table>
 </body>
