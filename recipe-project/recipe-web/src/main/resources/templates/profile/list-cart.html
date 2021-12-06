@@ -39,7 +39,7 @@
                     <a class="nav-link" href="http://localhost:8090/recipe/search">Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8090/profile">Profile</a>
+                    <a class="nav-link active" href="http://localhost:8090/profile">Profile</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -67,7 +67,7 @@
             <td th:text="${ingredient.getId()}"></td>
             <td th:text="${ingredient.getIngredientName()}"></td>
             <td th:text="${ingredient.getAmount()}"></td>
-            <td><a class="btn btn-primary" th:href="@{/profile/list/{id}/remove(id=${ingredient.id})}">Delete</a> </td>
+            <td><a class="btn btn-danger" th:href="@{/profile/list/{id}/remove(id=${ingredient.id})}">Delete</a> </td>
         </tr>
         </tbody>
     </table>

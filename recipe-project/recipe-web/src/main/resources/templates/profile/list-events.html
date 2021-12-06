@@ -39,7 +39,7 @@
                     <a class="nav-link" href="http://localhost:8090/recipe/search">Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8090/profile">Profile</a>
+                    <a class="nav-link active" href="http://localhost:8090/profile">Profile</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -65,7 +65,7 @@
         <tr th:each="event : ${events}">
             <td th:text="${event.eventName}"></td>
             <td><a class="btn btn-primary" th:href="@{/profile/event/edit/{id}(id=${event.id})}">Edit</a> </td>
-            <td><a class="btn btn-primary" th:href="@{/profile/event/delete/{id}(id=${event.id})}">Delete</a> </td>
+            <td><a class="btn btn-danger" th:href="@{/profile/event/delete/{id}(id=${event.id})}">Delete</a> </td>
         </tr>
         </tbody>
     </table>

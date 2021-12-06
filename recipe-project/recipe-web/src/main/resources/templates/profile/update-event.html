@@ -7,7 +7,7 @@
 <body>
 
 </body>
-</html>a<!DOCTYPE html>
+</html><!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -48,7 +48,7 @@
                     <a class="nav-link" href="http://localhost:8090/recipe/search">Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8090/profile">Profile</a>
+                    <a class="nav-link active" href="http://localhost:8090/profile">Profile</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -70,8 +70,8 @@
                    type="text">
         </div>
         <button class="btn btn-primary" th:text="'Update Event'" type="submit"></button>
+        <a th:href="@{/profile}" class="btn btn-primary">Back</a>
     </form>
-    <a th:href="@{/profile}" class="btn btn-primary">Go Back</a>
 </div>
 </body>
 </html>

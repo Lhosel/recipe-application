@@ -161,4 +161,27 @@ public class UserController {
 
     }
 
+    //Change Username
+    @GetMapping("/profile/username/edit")
+    public String showUpdateUserNameForm(Model model)
+    {
+        User user = userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        model.addAttribute("user", user);
+        return "/profile/update-username";
+
+    }
+    // Save the change to user
+
+    @PostMapping("/profile/username/save")
+    public String updateUsername(User user, Model model) {
+        String newName = user.getUsername();
+        System.out.println(newName);
+        user =  userSDJpaService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication()
+                .getName());
+        user.setUsername(newName);
+        userSDJpaService.save(user);
+        return "redirect:/profile";
+    }
+
 }

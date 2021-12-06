@@ -1,3 +1,12 @@
+/*
+* Project: < comp3095_assignment2 >
+* Assignment: < assignment 2 >
+* Author(s): <Dilan Piyasenage Don, Dominic Gopalakrishnan, Kunga Lhosel, Minh Duc Cung>
+* Student Number: <101278656, 101289239, 101266937,101234383>
+* Date: December 5th, 2021
+* Description: MyUserDetails for setting password and other details for user
+*/
+
 package ca.gbc.recipeproject.config;
 
 import ca.gbc.recipeproject.model.Role;

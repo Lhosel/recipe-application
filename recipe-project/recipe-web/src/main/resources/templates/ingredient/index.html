@@ -18,10 +18,10 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="http://localhost:8090/recipe/index">Recipes</a>
+                    <a class="nav-link" href="http://localhost:8090/recipe/index">Recipes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8090/ingredient">Ingredients</a>
+                    <a class="nav-link active" href="http://localhost:8090/ingredient">Ingredients</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8090/recipe/create">Create Recipe</a>
@@ -67,8 +67,8 @@
             <td th:text="${ingredient.getId()}"></td>
             <td th:text="${ingredient.getIngredientName()}"></td>
             <td th:text="${ingredient.getAmount()}"></td>
-            <td><a th:href="@{/ingredient/edit/{id}(id=${ingredient.id})}">Edit</a> </td>
-            <td><a th:href="@{/ingredient/delete/{id}(id=${ingredient.id})}">Delete</a> </td>
+            <td><a class="btn btn-primary" th:href="@{/ingredient/edit/{id}(id=${ingredient.id})}">Edit</a> </td>
+            <td><a class="btn btn-danger" th:href="@{/ingredient/delete/{id}(id=${ingredient.id})}">Delete</a> </td>
         </tr>
         </tbody>
     </table>

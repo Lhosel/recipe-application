@@ -18,7 +18,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="http://localhost:8090/recipe/index">Recipes</a>
+                    <a class="nav-link" href="http://localhost:8090/recipe/index">Recipes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8090/ingredient">Ingredients</a>
@@ -36,7 +36,7 @@
                     <a class="nav-link" href="http://localhost:8090/meal/create">Create Meal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8090/recipe/search">Search</a>
+                    <a class="nav-link active" href="http://localhost:8090/recipe/search">Search</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8090/profile">Profile</a>
@@ -58,6 +58,7 @@
             <input class="form-control" name="name" placeholder="Enter Recipe Name" type="search">
         </div>
         <button class="btn btn-primary" th:text="'Search'" type="submit"></button>
+        <a th:style="'margin-left: 10px'" th:href="@{/recipe}" class="btn btn-primary">Go Back</a>
     </form>
     &nbsp;
     <h4 th:text="${searchString}"></h4>
@@ -81,7 +82,6 @@
         </tbody>
     </table>
     <h4 th:if="${count}==0" th:text="'Nothing Found'"></h4>
-    <a th:href="@{/recipe}" class="btn btn-primary">Go Back</a>
 </div>
 </body>
 </html>

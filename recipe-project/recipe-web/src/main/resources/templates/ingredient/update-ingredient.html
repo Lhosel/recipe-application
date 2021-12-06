@@ -18,10 +18,10 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="http://localhost:8090/recipe/index">Recipes</a>
+                    <a class="nav-link" href="http://localhost:8090/recipe/index">Recipes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8090/ingredient">Ingredients</a>
+                    <a class="nav-link active" href="http://localhost:8090/ingredient">Ingredients</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8090/recipe/create">Create Recipe</a>
@@ -66,8 +66,8 @@
                    type="number">
         </div>
         <button class="btn btn-primary" th:text="'Update Ingredient'" type="submit"></button>
+        <a th:style="'margin-left: 10px'" th:href="@{/ingredient}" class="btn btn-primary">Back</a>
     </form>
-    <a th:href="@{/ingredient}" class="btn btn-primary">Go Back</a>
 </div>
 </body>
 </html>
